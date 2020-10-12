@@ -16,9 +16,15 @@ test('renders search button', () => {
 
 test('Upon search button being clicked, component renders new data if successful query', async () => {
 	
+	const { getByText } = render(
+		<Provider store={store}>
+			<App />
+		</Provider>
+	);
+
 	fireEvent.click(getByText('Search'))
 
-	const results = await screen.findAllByRole('div', {name: /list-item/i})
+	const results = await screen.findAllByRole('listitem')
 
 	expect(results).toHaveLength(10)
 
