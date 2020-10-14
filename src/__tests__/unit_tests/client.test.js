@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { fetchRecipesByIngredient } from '../api/client';
+import { fetchRecipesByIngredient } from '../../api/client';
 
 jest.mock('axios');
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, within } from '@testing-library/react';
-import { Recipe } from '../features/components/Recipe';
+import { Recipe } from '../../features/components/Recipe';
 
 describe('<Recipe />', () => {
 	it('renders the recipe component', () => {

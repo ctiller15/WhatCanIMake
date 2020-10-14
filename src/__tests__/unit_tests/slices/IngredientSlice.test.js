@@ -2,7 +2,7 @@ import ingredientReducer, {
 	initialState,
 	addIngredient,
 	removeIngredient
-} from '../../features/ingredient/ingredientSlice';
+} from '../../../features/ingredient/ingredientSlice';
 
 describe('ingredientSlice', () => {
 	describe('reducers', () => {

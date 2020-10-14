@@ -2,8 +2,8 @@ import configureStore from 'redux-mock-store';
 import React from 'react';
 import { within, render, fireEvent, screen, cleanup} from '@testing-library/react';
 import { Provider } from 'react-redux';
-import App from '../App';
-import { addIngredient } from '../features/ingredient/ingredientSlice';
+import App from '../../App';
+import { addIngredient } from '../../features/ingredient/ingredientSlice';
 
 const middlewares = [];
 const mockStore = configureStore(middlewares);
