@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import { useSelector, useDispatch } from 'react-redux';
+import { addIngredient, ingredientList } from './features/ingredient/ingredientSlice';
+
 import './App.css';
 
 import { Button, Input } from '@material-ui/core'
 
 function App() {
-	const [ingredient, setIngredient] = useState('')
+	const ingredients = useSelector(ingredientList);
+	const dispatch = useDispatch();
+	const [ingredient, setIngredient] = useState('');
 
 	const onIngredientChanged = e => setIngredient(e.target.value)
+
+	const onIngredientSubmitted = () => {
+		dispatch((addIngredient(ingredient)))
+		setIngredient('');
+	}
+
+	const ingredientDisplay = ingredients.map((item, ind) => {
+		return <li key={ind}>{item}</li>
+	});
 
   return (
     <div className="App">
@@ -19,12 +31,17 @@ function App() {
 				value={ingredient}
 				onChange={onIngredientChanged}
 			/>
-			<Button>
+			<Button onClick={onIngredientSubmitted}>
 				Add Ingredient	
 			</Button>
 			<Button color="primary">
 				Search
 			</Button>
+		</section>
+		<section>
+			<ul>
+				{ingredientDisplay}
+			</ul>
 		</section>
     </div>
   );

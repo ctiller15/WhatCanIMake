@@ -1,8 +1,28 @@
+import configureStore from 'redux-mock-store';
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { within, render, fireEvent, screen, cleanup, getByRole } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import store from '../app/store';
 import App from '../App';
+import { addIngredient } from '../features/ingredient/ingredientSlice';
+
+const middlewares = [];
+const mockStore = configureStore(middlewares);
+
+let store;
+
+beforeEach(() => {
+	store = mockStore({
+		ingredient: {
+			ingredients: []
+		}
+	});
+
+	store.dispatch = jest.fn();
+});
+
+afterEach(() => {
+	cleanup();
+});
 
 test('renders input box', () => {
 	render(
@@ -14,25 +34,42 @@ test('renders input box', () => {
 	expect(screen.getByRole('textbox')).toBeInTheDocument();
 });
 
-test('if button clicked, adds ingredient to list.', () => {
-	render(
+test('if button clicked, adds ingredient to list.', async () => {
+	const { getByRole } = render(
 		<Provider store={store}>
 			<App />
 		</Provider>
 	);
 
-	const inputField = screen.getByRole('textbox');
+	const inputField = getByRole('textbox');
 
 	fireEvent.change(inputField, { target: { value: 'new ingredient'}})
 
-	const button = screen.getByRole('button', {name: /add ingredient/i})
+	const button = getByRole('button', {name: /add ingredient/i})
 	fireEvent.click(button)
 
-	const results = screen.getByRole('list', {name: /added ingredients/i})
-		.getAllByRole('listitem')
+	expect(store.dispatch).toHaveBeenCalledTimes(1);
+	expect(store.dispatch).toHaveBeenCalledWith(addIngredient('new ingredient'));
+});
 
-	expect(results).toHaveLength(1);
-	expect(results.textContent).toBe('new ingredient');
+test('ingredients are placed in a list', () => {
+	store = mockStore({
+		ingredient: {
+			ingredients: ['new ingredient']
+		}
+	});
+
+	const { getByRole } = render(
+		<Provider store={store}>
+			<App />
+		</Provider>
+	);
+
+	const resultList = getByRole('list');
+	const items = within(resultList).getAllByRole('listitem');
+
+	expect(items).toHaveLength(1);
+	expect(items[0].textContent).toBe('new ingredient');
 });
 
 test('renders search button', () => {

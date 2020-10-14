@@ -16,4 +16,7 @@ export const ingredientSlice = createSlice({
 
 export const { addIngredient } = ingredientSlice.actions;
 
+
+export const ingredientList = state => state.ingredient.ingredients;
+
 export default ingredientSlice.reducer;
