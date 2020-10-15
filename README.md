@@ -1,4 +1,13 @@
+
+
+###environment variables:
+
+All should exist in a `.env` file at the root of the project.
+
+`REACT_APP_SPOONACULAR_API_KEY: {insert_api_key_here}`
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+
 
 ## Available Scripts
 

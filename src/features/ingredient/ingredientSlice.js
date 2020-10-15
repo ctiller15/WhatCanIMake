@@ -1,8 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { fetchRecipesByIngredient } from '../../api/client';
 
 export const initialState = {
-	ingredients: []
+	ingredients: [],
+	loading: 'idle',
+	recipes: []
 }
+
+export const fetchRecipesByIngredients = createAsyncThunk('recipe/fetchByIngredient', async (ingredientString) => {
+	const response = await fetchRecipesByIngredient(ingredientString);
+	return response.data;
+});
 
 export const ingredientSlice = createSlice({
 	name: 'ingredient',
@@ -12,6 +20,11 @@ export const ingredientSlice = createSlice({
 			state.ingredients.push(action.payload);
 		},
 	},
+	extraReducers: {
+		[fetchRecipesByIngredients.fulfilled]: (state, action) => {
+			state.recipes = action.payload;
+		}
+	}
 });
 
 export const { addIngredient } = ingredientSlice.actions;

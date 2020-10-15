@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addIngredient, ingredientList } from './features/ingredient/ingredientSlice';
-
+import { addIngredient, ingredientList, fetchRecipesByIngredients } from './features/ingredient/ingredientSlice';
+import { generateRecipesIngredientsQueryString } from './app/utils'
 import './App.css';
 
 import { Button, Input } from '@material-ui/core'
@@ -22,6 +22,11 @@ function App() {
 		return <li key={ind}>{item}</li>
 	});
 
+	const getRecipes = () => {
+		const ingredientString = generateRecipesIngredientsQueryString(ingredients);
+		dispatch((fetchRecipesByIngredients(ingredientString)));
+	}
+
   return (
     <div className="App">
 		<section>
@@ -34,7 +39,8 @@ function App() {
 			<Button onClick={onIngredientSubmitted}>
 				Add Ingredient	
 			</Button>
-			<Button color="primary">
+			<Button color="primary"
+				onClick={getRecipes}>
 				Search
 			</Button>
 		</section>
