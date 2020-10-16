@@ -4,9 +4,6 @@ import ingredientReducer, {
 	removeIngredient,
 	fetchRecipesByIngredients
 } from '../../../features/ingredient/ingredientSlice';
-import { configureStore } from '@reduxjs/toolkit';
-
-import { fetchRecipesByIngredient } from '../../../api/client'
 
 jest.mock('../../../api/client');
 
@@ -26,22 +23,10 @@ describe('ingredientSlice', () => {
 		});
 
 		it('adds recipes to the store', () => {
-			const store = configureStore({
-				reducer: {
-					ingredient: ingredientReducer,
-				}
-			});
 			const mockPayload = [{title: "item1"}, {title: "item2"}, {title: "item3"}, {title: "item4"}];
 			const expectedAction = fetchRecipesByIngredients.fulfilled(mockPayload);
 
-			fetchRecipesByIngredient.mockReturnValue(Promise.resolve(mockPayload));
-
-			const thunk = store.dispatch(fetchRecipesByIngredients("dummyString"));
-
-			thunk.then(() => {
-				const actionsCalled = store.getActions();
-				expect(actionsCalled).toContainEqual(expectedAction);
-			});
+			expect(ingredientReducer({}, expectedAction).recipes).toEqual(mockPayload);
 		});
 	});
 });

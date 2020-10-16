@@ -7,11 +7,11 @@ describe('<Recipe />', () => {
 		const recipe = {
 			imageSource: "https://www.fakeimage.com/fakeimage.jpg",
 			text: "This is a recipe title",
-			existingIngredients: ['garlic', 'lemon juice', 'chicken'],
-			requiredIngredients: ['onion', 'bowtie pasta']
+			existingIngredients: [{name: 'garlic'}, {name: 'lemon juice'}, {name: 'chicken'}],
+			requiredIngredients: [{name: 'onion'}, {name: 'bowtie pasta'}]
 		};
 
-		render(<Recipe {...recipe}/>);
+		const { debug } = render(<Recipe {...recipe}/>);
 
 		const image = screen.getByRole('img');
 		expect(image).toBeInTheDocument();
@@ -27,13 +27,13 @@ describe('<Recipe />', () => {
 		expect(existingIngredients.length).toBe(recipe.existingIngredients.length);
 		
 		existingIngredients.forEach((ingredient, ind) => {
-			expect(ingredient).toHaveTextContent(recipe.existingIngredients[ind]);
+			expect(ingredient).toHaveTextContent(recipe.existingIngredients[ind].name);
 		});
 
 		expect(neededIngredients.length).toBe(recipe.requiredIngredients.length);
 
 		neededIngredients.forEach((ingredient, ind) => {
-			expect(ingredient).toHaveTextContent(recipe.requiredIngredients[ind]);
+			expect(ingredient).toHaveTextContent(recipe.requiredIngredients[ind].name);
 		});
 	});
 });

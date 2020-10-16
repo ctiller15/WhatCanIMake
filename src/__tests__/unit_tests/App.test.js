@@ -13,7 +13,8 @@ let store;
 beforeEach(() => {
 	store = mockStore({
 		ingredient: {
-			ingredients: []
+			ingredients: [],
+			recipes: []
 		}
 	});
 
@@ -55,17 +56,18 @@ test('if button clicked, calls method to add ingredient', async () => {
 test('ingredients are placed in a list', () => {
 	store = mockStore({
 		ingredient: {
-			ingredients: ['new ingredient']
+			ingredients: ['new ingredient'],
+			recipes: []
 		}
 	});
 
-	const { getByRole } = render(
+	const { getAllByRole } = render(
 		<Provider store={store}>
 			<App />
 		</Provider>
 	);
 
-	const resultList = getByRole('list');
+	const resultList = getAllByRole('list')[0];
 	const items = within(resultList).getAllByRole('listitem');
 
 	expect(items).toHaveLength(1);
