@@ -11,10 +11,7 @@ describe('<Recipe />', () => {
 			requiredIngredients: [{name: 'onion'}, {name: 'bowtie pasta'}]
 		};
 
-		const { debug } = render(<Recipe {...recipe}/>);
-
-		const image = screen.getByRole('img');
-		expect(image).toBeInTheDocument();
+		render(<Recipe {...recipe}/>);
 
 		const title = screen.getByText(recipe.text);
 		expect(title).toBeInTheDocument();

@@ -5,7 +5,7 @@ import { generateRecipesIngredientsQueryString } from './app/utils'
 import { Recipe } from '../src/features/components/Recipe'
 import './App.css';
 
-import { Button, Input } from '@material-ui/core'
+import { Button, Input, TextField, List, ListItem, ListItemText } from '@material-ui/core'
 
 function App() {
 	const ingredients = useSelector(ingredientList);
@@ -21,18 +21,24 @@ function App() {
 	}
 
 	const ingredientDisplay = ingredients.map((item, ind) => {
-		return <li key={ind}>{item}</li>
+		return (
+		<ListItem 
+			dense={true} 
+			key={ind}>
+				<ListItemText>{item}</ListItemText>
+		</ListItem>
+		);
 	});
 
 	const recipeDisplay = recipes.map((recipe, ind) => {
-		return <li key={`Recipe-${ind}`}>
+		return <ListItem key={`Recipe-${ind}`}>
 			<Recipe 
 			imageSource={recipe.image} 
 			text={recipe.title}
 			existingIngredients={recipe.usedIngredients}
 			requiredIngredients={recipe.missedIngredients}
 		/>
-		</li>
+		</ListItem>
 	});
 
 	const getRecipes = () => {
@@ -43,30 +49,35 @@ function App() {
   return (
     <div className="App">
 		<section>
-			<Input
-				type="text" 
+			<TextField
+				label="Ingredient"
+				variant="outlined"
 				placeholder="Input an ingredient!"
 				value={ingredient}
 				onChange={onIngredientChanged}
 			/>
-			<Button onClick={onIngredientSubmitted}>
+			<Button 
+				variant="contained"
+				onClick={onIngredientSubmitted}>
 				Add Ingredient	
 			</Button>
-			<Button color="primary"
+			<Button 
+				variant="contained"
+				color="primary"
 				onClick={getRecipes}>
 				Search
 			</Button>
 		</section>
 		<section>
-			<ul>
+			<List>
 				{ingredientDisplay}
-			</ul>
+			</List>
 		</section>
 		{recipeDisplay.length > 0 ? <section>
 			<h2>Results</h2>
-			<ul >
+			<List>
 				{recipeDisplay}
-			</ul>
+			</List>
 		</section> : null}
     </div>
   );
