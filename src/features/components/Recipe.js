@@ -1,10 +1,14 @@
 import React from 'react';
 import { List, ListItem, ListItemText, Card, CardHeader, CardMedia, CardContent } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		maxWidth: 345,
+	},
+	header: {
+		width: 345,
 	},
 	media: {
 		height: 0,
@@ -37,6 +41,7 @@ export const Recipe = (props) => {
 	return (
 		<Card className={classes.root} data-testid='recipeDisplay'>
 			<CardHeader
+				className={classes.header}
 				title={props.text}
 			/>
 			<CardMedia 
@@ -44,7 +49,8 @@ export const Recipe = (props) => {
 				image={props.imageSource}
 				title={props.text}
 			/>
-			<section>
+			<Box display="flex"
+				justifyContent="space-around">
 				<section>
 					<h4>have</h4>
 					<List>
@@ -57,7 +63,7 @@ export const Recipe = (props) => {
 						{requiredIngredientsDisplay}
 					</List>
 				</section>
-			</section>
+			</Box>
 		</Card>
 	);
 }
