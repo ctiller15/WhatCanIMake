@@ -22,7 +22,7 @@ beforeEach(() => {
 
 describe('<App', () => {
 	it('places ingredients in a list', () => {
-		const { getByRole } = render(
+		const { getByRole, getAllByRole } = render(
 			<Provider store={store}>
 				<App />
 			</Provider>
@@ -35,7 +35,7 @@ describe('<App', () => {
 		const button = getByRole('button', {name: /add ingredient/i})
 		fireEvent.click(button)
 
-		const resultList = getByRole('list');
+		const resultList = getAllByRole('list')[0];
 		const items = within(resultList).getAllByRole('listitem');
 
 		expect(items).toHaveLength(1);
@@ -47,23 +47,37 @@ describe('<App', () => {
 		const data = {
 			data: [
 				{
-					title: "Blackberry-Apple Pie Filling"
+					image: 'https://dummyImage.png',
+					title: "Blackberry-Apple Pie Filling",
+					usedIngredients: ['item 1', 'item 2'],
+					missedIngredients: ['item 3', 'item 4']
 				},
 				{
-					title: "Second food item."
+					image: 'https://dummyImage.png',
+					title: "Second food item.",
+					usedIngredients: ['item 1', 'item 2'],
+					missedIngredients: ['item 3', 'item 4']
 				},
 				{
-					title: "Third foooooood item."
+					image: 'https://dummyImage.png',
+					title: "Third foooooood item.",
+					usedIngredients: ['item 1', 'item 2'],
+					missedIngredients: ['item 3', 'item 4']
+
 				},
 				{
-					title: "Fourth delicious food item."
+					image: 'https://dummyImage.png',
+					title: "Fourth delicious food item.",
+					usedIngredients: ['item 1', 'item 2'],
+					missedIngredients: ['item 3', 'item 4']
+
 				}
 			]
 		}
 
 		axios.get.mockImplementationOnce(() => Promise.resolve(data));
 
-		const { getByText, getByRole } = render(
+		const {getByRole, findAllByTestId } = render(
 			<Provider store={store}>
 				<App />
 			</Provider>
@@ -76,14 +90,10 @@ describe('<App', () => {
 		const button = getByRole('button', {name: /add ingredient/i})
 		fireEvent.click(button)
 
-		fireEvent.click(getByText('Search'))
+		fireEvent.click(getByRole('button', {name: /Search/i}))
 
-		const resultElement = getByRole('list')
+		const resultList = await findAllByTestId('recipeDisplay')
 
-		const results = within(resultElement).findAllByRole('listitem')
-
-		expect(results).toHaveLength(4)
-
-		throw new Error('Finish the test!');
+		expect(resultList).toHaveLength(data.data.length)
 	})
 });

@@ -31,5 +31,6 @@ export const { addIngredient } = ingredientSlice.actions;
 
 
 export const ingredientList = state => state.ingredient.ingredients;
+export const recipeList = state => state.ingredient.recipes;
 
 export default ingredientSlice.reducer;
