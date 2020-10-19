@@ -42,6 +42,38 @@ describe('<App', () => {
 		expect(items[0].textContent).toBe('new ingredient');
 	});
 
+	it('removes ingredients from a list', () => {
+		const { getByRole, getAllByRole } = render(
+			<Provider store={store}>
+				<App />
+			</Provider>
+		);
+
+		const inputfield = getByRole('textbox')
+
+		fireEvent.change(inputfield, { target: { value: 'new ingredient'}})
+
+		const button = getByRole('button', {name: /add ingredient/i})
+		fireEvent.click(button)
+
+		fireEvent.change(inputfield, { target: { value: 'new ingredient 2'}})
+
+		fireEvent.click(button)
+
+		const resultList = getAllByRole('list')[0];
+		const items = within(resultList).getAllByRole('listitem');
+
+		expect(items).toHaveLength(2);
+
+		const itemToDeleteButton = within(items[1]).getByRole('button');
+
+		fireEvent.click(itemToDeleteButton);
+
+		expect(items).toHaveLength(1);
+
+		throw new Error('finish the test!');
+	});
+
 	it('renders new data if successful query', async () => {
 		
 		const data = {

@@ -5,7 +5,7 @@ import { generateRecipesIngredientsQueryString } from './app/utils'
 import { Recipe } from '../src/features/components/Recipe'
 import './App.css';
 
-import { Button, Input, TextField, List, ListItem, ListItemText } from '@material-ui/core'
+import { Button, Input, TextField, List, ListItem, ListItemText, Box } from '@material-ui/core'
 
 function App() {
 	const ingredients = useSelector(ingredientList);
@@ -68,11 +68,12 @@ function App() {
 				Search
 			</Button>
 		</section>
-		<section>
+		<Box display="flex"
+			justifyContent="center">
 			<List>
 				{ingredientDisplay}
 			</List>
-		</section>
+		</Box>
 		{recipeDisplay.length > 0 ? <section>
 			<h2>Results</h2>
 			<List>

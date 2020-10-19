@@ -19,6 +19,9 @@ export const ingredientSlice = createSlice({
 		addIngredient: (state, action) => {
 			state.ingredients.push(action.payload);
 		},
+		removeIngredient: (state, action) => {
+			state.ingredients.splice(action.payload, 1);
+		},
 	},
 	extraReducers: {
 		[fetchRecipesByIngredients.fulfilled]: (state, action) => {
@@ -27,7 +30,7 @@ export const ingredientSlice = createSlice({
 	}
 });
 
-export const { addIngredient } = ingredientSlice.actions;
+export const { addIngredient, removeIngredient } = ingredientSlice.actions;
 
 
 export const ingredientList = state => state.ingredient.ingredients;

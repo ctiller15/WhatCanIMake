@@ -19,7 +19,19 @@ describe('ingredientSlice', () => {
 			const newIngredient = 'garlic'
 			initialArray.push(newIngredient);
 			const nextState = ingredientReducer(initialState, addIngredient(newIngredient));
+
 			expect(nextState.ingredients).toEqual(initialArray);
+		});
+
+		it('removes an ingredient from the store', () => {
+			const ingredientIndex = 0
+			const finalArray = ['onions']
+			
+			initialState.ingredients.push('garlic', 'onions');
+
+			const nextState = ingredientReducer(initialState, removeIngredient(ingredientIndex));
+
+			expect(nextState.ingredients).toEqual(finalArray);
 		});
 
 		it('adds recipes to the store', () => {
