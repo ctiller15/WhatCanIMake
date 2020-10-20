@@ -1,6 +1,4 @@
-
-
-###environment variables:
+### environment variables:
 
 All should exist in a `.env` file at the root of the project.
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, ListItem, ListItemText, Card, CardHeader, CardMedia, CardContent } from '@material-ui/core';
+import { List, ListItem, ListItemText, Card, CardHeader, CardMedia } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 

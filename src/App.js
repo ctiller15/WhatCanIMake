@@ -3,9 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addIngredient, removeIngredient, ingredientList, fetchRecipesByIngredients, recipeList } from './features/ingredient/ingredientSlice';
 import { generateRecipesIngredientsQueryString } from './app/utils'
 import { Recipe } from '../src/features/components/Recipe'
+import { Footer } from '../src/features/components/Footer/Footer'
 import './App.css';
 
-import { Button, Input, TextField, List, ListItem, ListItemText, Box, IconButton} from '@material-ui/core'
+import { Button, TextField, List, ListItem, ListItemText, Box, IconButton} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 function App() {
@@ -81,6 +82,7 @@ function App() {
 				{recipeDisplay}
 			</List>
 		</section> : null}
+		<Footer />
     </div>
   );
 }
