@@ -69,9 +69,10 @@ describe('<App', () => {
 
 		fireEvent.click(itemToDeleteButton);
 
-		expect(items).toHaveLength(1);
+		const updatedList = getAllByRole('list')[0];
+		const newItems = within(updatedList).getAllByRole('listitem');
 
-		throw new Error('finish the test!');
+		expect(newItems).toHaveLength(1);
 	});
 
 	it('renders new data if successful query', async () => {

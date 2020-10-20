@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addIngredient, ingredientList, fetchRecipesByIngredients, recipeList } from './features/ingredient/ingredientSlice';
+import { addIngredient, removeIngredient, ingredientList, fetchRecipesByIngredients, recipeList } from './features/ingredient/ingredientSlice';
 import { generateRecipesIngredientsQueryString } from './app/utils'
 import { Recipe } from '../src/features/components/Recipe'
 import './App.css';
 
-import { Button, Input, TextField, List, ListItem, ListItemText, Box } from '@material-ui/core'
+import { Button, Input, TextField, List, ListItem, ListItemText, Box, IconButton} from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 function App() {
 	const ingredients = useSelector(ingredientList);
@@ -25,7 +26,7 @@ function App() {
 		<ListItem 
 			dense={true} 
 			key={ind}>
-				<ListItemText>{item}</ListItemText>
+			<ListItemText>{item}</ListItemText><IconButton aria-label="delete" onClick={() => dispatch(removeIngredient(ind))}><DeleteIcon /></IconButton>
 		</ListItem>
 		);
 	});

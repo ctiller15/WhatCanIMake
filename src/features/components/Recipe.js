@@ -9,10 +9,20 @@ const useStyles = makeStyles((theme) => ({
 	},
 	header: {
 		width: 345,
+		boxSizing: 'border-box',
 	},
 	media: {
 		height: 0,
 		paddingTop: '56.25%',
+	},
+	ingredientColumns: {
+		width: '50%'
+	},
+	columnHeader: {
+		textAlign: 'center'
+	},
+	ingredient: {
+		textAlign: 'center'
 	}
 }));
 
@@ -26,7 +36,7 @@ export const Recipe = (props) => {
 			<ListItem 
 				dense={true} 
 				key={ind}>
-				<ListItemText>{ingredient.name}</ListItemText>
+				<ListItemText className={classes.ingredient}>{ingredient.name}</ListItemText>
 			</ListItem>)
 	});
 
@@ -34,7 +44,7 @@ export const Recipe = (props) => {
 		return (<ListItem 
 			dense={true} 
 			key={ind}>
-				<ListItemText>{ingredient.name}</ListItemText>
+			<ListItemText className={classes.ingredient}>{ingredient.name}</ListItemText>
 			</ListItem>)
 	});
 
@@ -50,19 +60,25 @@ export const Recipe = (props) => {
 				title={props.text}
 			/>
 			<Box display="flex"
-				justifyContent="space-around">
-				<section>
-					<h4>have</h4>
+				justifyContent="space-between"
+				alignItems="flex-start">
+				<Box className={classes.ingredientColumns}
+					display="flex"
+					flexDirection="column"
+				justifyContent="center">
+					<h4 className={classes.columnHeader}>have</h4>
 					<List>
 						{existingIngredientsDisplay}
 					</List>
-				</section>
-				<section>
-					<h4>need</h4>
+				</Box>
+				<Box className={classes.ingredientColumns} display="flex"
+					flexDirection="column"
+					justifyContent="center">
+					<h4 className={classes.columnHeader}>need</h4>
 					<List>
 						{requiredIngredientsDisplay}
 					</List>
-				</section>
+				</Box>
 			</Box>
 		</Card>
 	);
