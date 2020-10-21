@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  margin-top: 2em;
+  height: inherit;
 }
 
 .App-logo {
@@ -37,4 +37,12 @@
   100% {
     transform: translateY(0px)
   }
+}
+
+#root {
+	height: inherit;
+}
+
+.searchBox {
+	padding-top: 2em;
 }

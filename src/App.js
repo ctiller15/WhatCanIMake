@@ -4,12 +4,34 @@ import { addIngredient, removeIngredient, ingredientList, fetchRecipesByIngredie
 import { generateRecipesIngredientsQueryString } from './app/utils'
 import { Recipe } from '../src/features/components/Recipe'
 import { Footer } from '../src/features/components/Footer/Footer'
+import { ThemeProvider, makeStyles, createMuiTheme } from '@material-ui/core/styles';
+import { deepPurple } from '@material-ui/core/colors';
 import './App.css';
 
 import { Button, TextField, List, ListItem, ListItemText, Box, IconButton} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 
+	const theme = createMuiTheme({
+		palette: {
+			primary: deepPurple
+		}
+	});
+
+	const inputStyles = makeStyles(() => ({
+		root: {
+			background: "white"
+		},
+		focused: {
+			color: "#222222",
+		},
+		labelFocused: {
+			color: "#CCCCCC"
+		}
+	}));
+
 function App() {
+	const inputClasses = inputStyles();
+
 	const ingredients = useSelector(ingredientList);
 	const recipes = useSelector(recipeList);
 	const dispatch = useDispatch();
@@ -48,15 +70,31 @@ function App() {
 		dispatch((fetchRecipesByIngredients(ingredientString)));
 	}
 
+
   return (
-    <div className="App">
-		<section>
+	  <ThemeProvider theme={theme}>
+	  <Box className="App"
+		display="flex"
+		flexDirection="column">
+		  <section className="searchBox">
 			<TextField
 				label="Ingredient"
 				variant="outlined"
 				placeholder="Input an ingredient!"
 				value={ingredient}
 				onChange={onIngredientChanged}
+				InputProps={{
+					classes: {
+						root: inputClasses.root,
+						focused: inputClasses.focused,
+					}
+				}}
+				InputLabelProps={{
+					classes: {
+						root: inputClasses.labelFocused,
+						focused: inputClasses.labelFocused,
+					}
+				}}
 			/>
 			<Button 
 				variant="contained"
@@ -76,14 +114,15 @@ function App() {
 				{ingredientDisplay}
 			</List>
 		</Box>
-		{recipeDisplay.length > 0 ? <section>
+		{recipeDisplay.length > 0 ? <Box flexGrow={1}>
 			<h2>Results</h2>
 			<List>
 				{recipeDisplay}
 			</List>
-		</section> : null}
-		<Footer />
-    </div>
+		</Box> : <Box flexGrow={1}></Box>}
+		<Footer flexShrink={0}/>
+    </Box>
+	  </ThemeProvider>
   );
 }
 
