@@ -127,7 +127,9 @@ function App() {
 			  </Box>
 		</Box>
 		<Box display="flex"
-			justifyContent="center">
+			flexDirection="column"
+			justifyContent="center"
+			alignItems="center">
 			<h3>Ingredient(s)</h3>
 			<List>
 				{ingredientDisplay}
