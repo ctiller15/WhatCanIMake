@@ -1,14 +1,13 @@
 import React from 'react';
-import { List, ListItem, ListItemText, Card, CardHeader, CardMedia } from '@material-ui/core';
+import { List, ListItem, ListItemText, Card, CardHeader, CardMedia, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		maxWidth: 345,
+		maxWidth: 320,
 	},
 	header: {
-		width: 345,
+		width: '100%',
 		boxSizing: 'border-box',
 	},
 	media: {
@@ -41,11 +40,11 @@ export const Recipe = (props) => {
 	});
 
 	const requiredIngredientsDisplay = requiredIngredients.map((ingredient, ind) => {
-		return (<ListItem 
+		return <ListItem
 			dense={true} 
 			key={ind}>
 			<ListItemText className={classes.ingredient}>{ingredient.name}</ListItemText>
-			</ListItem>)
+		</ListItem>
 	});
 
 	return (

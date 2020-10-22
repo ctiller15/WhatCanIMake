@@ -8,7 +8,7 @@ import { ThemeProvider, makeStyles, createMuiTheme } from '@material-ui/core/sty
 import { deepPurple } from '@material-ui/core/colors';
 import './App.css';
 
-import { Button, TextField, List, ListItem, ListItemText, Box, IconButton} from '@material-ui/core'
+import { Button, TextField, List, ListItem, ListItemText, Box, IconButton, Grid } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 	const theme = createMuiTheme({
@@ -46,23 +46,33 @@ function App() {
 
 	const ingredientDisplay = ingredients.map((item, ind) => {
 		return (
-		<ListItem 
+		<Box display="flex"
+			flexWrap="wrap"
+			component={ListItem}
 			dense={true} 
 			key={ind}>
 			<ListItemText>{item}</ListItemText><IconButton aria-label="delete" onClick={() => dispatch(removeIngredient(ind))}><DeleteIcon /></IconButton>
-		</ListItem>
+			</Box>
 		);
 	});
 
 	const recipeDisplay = recipes.map((recipe, ind) => {
-		return <ListItem key={`Recipe-${ind}`}>
+		return <Grid item 
+			component={ListItem} 
+			xs={12} 
+			sm={6} 
+			md={3} 
+			lg={3} 
+			xl={3} 
+			key={`Recipe-${ind}`}
+			style={{justifyContent: 'center'}}>
 			<Recipe 
 			imageSource={recipe.image} 
 			text={recipe.title}
 			existingIngredients={recipe.usedIngredients}
 			requiredIngredients={recipe.missedIngredients}
 		/>
-		</ListItem>
+		</Grid>
 	});
 
 	const getRecipes = () => {
@@ -75,10 +85,15 @@ function App() {
 	  <ThemeProvider theme={theme}>
 	  <Box className="App"
 		display="flex"
-		flexDirection="column">
-		  <section className="searchBox">
+		flexDirection="column"
+	  	alignItems="center">
+		  <h1>Recipe Search</h1>
+		  <h2>(By Ingredient!)</h2>
+		  <Box className="searchBox"
+		  	display="flex"
+		  	flexDirection="column">
 			<TextField
-				label="Ingredient"
+				label="Ingredient(s)"
 				variant="outlined"
 				placeholder="Input an ingredient!"
 				value={ingredient}
@@ -96,31 +111,39 @@ function App() {
 					}
 				}}
 			/>
-			<Button 
-				variant="contained"
-				onClick={onIngredientSubmitted}>
-				Add Ingredient	
-			</Button>
-			<Button 
-				variant="contained"
-				color="primary"
-				onClick={getRecipes}>
-				Search
-			</Button>
-		</section>
+			  <Box display="flex"
+				  justifyContent="space-between">
+				<Button 
+					variant="contained"
+					onClick={onIngredientSubmitted}>
+					Add Ingredient	
+				</Button>
+				<Button 
+					variant="contained"
+					color="primary"
+					onClick={getRecipes}>
+					Search
+				</Button>
+			  </Box>
+		</Box>
 		<Box display="flex"
 			justifyContent="center">
+			<h3>Ingredient(s)</h3>
 			<List>
 				{ingredientDisplay}
 			</List>
 		</Box>
 		{recipeDisplay.length > 0 ? <Box flexGrow={1}>
 			<h2>Results</h2>
-			<List>
+			<Grid 
+				container 
+				spacing={0} 
+				component={List}
+				alignItems='stretch'>
 				{recipeDisplay}
-			</List>
+			</Grid>
 		</Box> : <Box flexGrow={1}></Box>}
-		<Footer flexShrink={0}/>
+		  <Footer/>
     </Box>
 	  </ThemeProvider>
   );

@@ -1,12 +1,13 @@
-
+import { Box } from '@material-ui/core';
 import React from 'react';
 
 import './Footer.css';
 
 export const Footer = () => {
 	return(
-		<div className="footer">
+		<Box className="footer"
+			alignSelf="stretch">
 			<p>Check this project out on <a rel="noopener noreferrer" href="https://github.com/ctiller15/WhatCanIMake" target="_blank">github!</a></p>
-		</div>
+		</Box>
 	);
 }
