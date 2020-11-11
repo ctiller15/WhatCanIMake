@@ -114,11 +114,13 @@ function App() {
 			  <Box display="flex"
 				  justifyContent="space-between">
 				<Button 
+					disabled={!ingredient}
 					variant="contained"
 					onClick={onIngredientSubmitted}>
 					Add Ingredient	
 				</Button>
 				<Button 
+					disabled={ingredients.length === 0}
 					variant="contained"
 					color="primary"
 					onClick={getRecipes}>
