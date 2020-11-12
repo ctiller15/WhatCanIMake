@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, ListItem, ListItemText, Card, CardHeader, CardMedia, Box } from '@material-ui/core';
+import { List, ListItem, ListItemText, Card, CardHeader, CardMedia, Box, ListItemAvatar, Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,15 +36,28 @@ export const Recipe = (props) => {
 				dense={true} 
 				key={ind}>
 				<ListItemText className={classes.ingredient}>{ingredient.name}</ListItemText>
+				<ListItemAvatar>
+					<Avatar 
+						alt={ingredient.name}
+						src={ingredient.image}
+					/>
+				</ListItemAvatar>
 			</ListItem>)
 	});
 
 	const requiredIngredientsDisplay = requiredIngredients.map((ingredient, ind) => {
-		return <ListItem
-			dense={true} 
-			key={ind}>
-			<ListItemText className={classes.ingredient}>{ingredient.name}</ListItemText>
-		</ListItem>
+		return (
+			<ListItem
+				dense={true} 
+				key={ind}>
+				<ListItemText className={classes.ingredient}>{ingredient.name}</ListItemText>
+				<ListItemAvatar>
+					<Avatar 
+						alt={ingredient.name}
+						src={ingredient.image}
+					/>
+				</ListItemAvatar>
+			</ListItem>)
 	});
 
 	return (
