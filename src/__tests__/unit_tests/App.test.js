@@ -74,6 +74,32 @@ test('ingredients are placed in a list', () => {
 	expect(items[0].textContent).toBe('new ingredient');
 });
 
+test('If text is empty, add ingredient button is disabled', () => {
+	const { getByRole } = render(
+		<Provider store={store}>
+			<App />
+		</Provider>
+	);
+
+	const button = getByRole('button', {name: /add ingredient/i})
+	expect(button).toBeDisabled();
+})
+
+test('If text is not empty, add ingredient button is enabled', () => {
+	const { getByRole } = render(
+		<Provider store={store}>
+			<App />
+		</Provider>
+	);
+
+	const inputField = getByRole('textbox');
+
+	fireEvent.change(inputField, { target: { value: 'new ingredient'}})
+
+	const button = getByRole('button', {name: /add ingredient/i})
+	expect(button).not.toBeDisabled();
+})
+
 test('renders search button', () => {
 	const { getByText } = render(
 		<Provider store={store}>
@@ -82,4 +108,42 @@ test('renders search button', () => {
 	);
 
 	expect(getByText('Search')).toBeInTheDocument();
+});
+
+test('If ingredients are empty, search button is disabled', () => {
+	store = mockStore({
+		ingredient: {
+			ingredients: [],
+			recipes: []
+		}
+	});
+
+	const { getByRole } = render(
+		<Provider store={store}>
+			<App />
+		</Provider>
+	);
+
+	const searchButton = getByRole('button', {name: /search/i});
+
+	expect(searchButton).toBeDisabled();
+})
+
+test('If ingredients are not empty, search button is enabled', () => {
+	store = mockStore({
+		ingredient: {
+			ingredients: ['new ingredient'],
+			recipes: []
+		}
+	});
+
+	const { getByRole } = render(
+		<Provider store={store}>
+			<App />
+		</Provider>
+	);
+
+	const searchButton = getByRole('button', {name: /search/i});
+
+	expect(searchButton).not.toBeDisabled();
 });
