@@ -147,3 +147,15 @@ test('If ingredients are not empty, search button is enabled', () => {
 
 	expect(searchButton).not.toBeDisabled();
 });
+
+test('It renders ranking switch', () => {
+	
+	const {getByTestId } = render(
+		<Provider store={store}>
+			<App />
+		</Provider>
+	);
+
+	const rankingSwitch = getByTestId('ranking');
+	expect(rankingSwitch).toBeInTheDocument();
+});
