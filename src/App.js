@@ -8,7 +8,8 @@ import { ThemeProvider, makeStyles, createMuiTheme } from '@material-ui/core/sty
 import { deepPurple } from '@material-ui/core/colors';
 import './App.css';
 
-import { Button, TextField, List, ListItem, ListItemText, Box, IconButton, Grid } from '@material-ui/core'
+import { Button, TextField, List, ListItem, ListItemText, Box, IconButton, Grid, Switch, FormControlLabel, Tooltip, ClickAwayListener} from '@material-ui/core'
+import HelpIcon from '@material-ui/icons/Help'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 	const theme = createMuiTheme({
@@ -36,6 +37,11 @@ function App() {
 	const recipes = useSelector(recipeList);
 	const dispatch = useDispatch();
 	const [ingredient, setIngredient] = useState('');
+	const [ranking, setRanking] = useState(false);
+	const [open, setOpen] =  useState(false);
+
+	const handleTooltipClose = () => { setOpen(false) }
+	const handleTooltipOpen = () => { setOpen(true) }
 
 	const onIngredientChanged = e => setIngredient(e.target.value)
 
@@ -76,7 +82,7 @@ function App() {
 	});
 
 	const getRecipes = () => {
-		const ingredientString = generateRecipesIngredientsQueryString(ingredients);
+		const ingredientString = generateRecipesIngredientsQueryString(ingredients, ranking);
 		dispatch((fetchRecipesByIngredients(ingredientString)));
 	}
 
@@ -92,25 +98,57 @@ function App() {
 		  <Box className="searchBox"
 		  	display="flex"
 		  	flexDirection="column">
-			<TextField
-				label="Ingredient(s)"
-				variant="outlined"
-				placeholder="Input an ingredient!"
-				value={ingredient}
-				onChange={onIngredientChanged}
-				InputProps={{
-					classes: {
-						root: inputClasses.root,
-						focused: inputClasses.focused,
-					}
-				}}
-				InputLabelProps={{
-					classes: {
-						root: inputClasses.labelFocused,
-						focused: inputClasses.labelFocused,
-					}
-				}}
-			/>
+				<TextField
+					label="Ingredient(s)"
+					variant="outlined"
+					placeholder="Input an ingredient!"
+					value={ingredient}
+					onChange={onIngredientChanged}
+					InputProps={{
+						classes: {
+							root: inputClasses.root,
+							focused: inputClasses.focused,
+						}
+					}}
+					InputLabelProps={{
+						classes: {
+							root: inputClasses.labelFocused,
+							focused: inputClasses.labelFocused,
+						}
+					}}
+				/>
+			  <Box display="flex"
+			  	justifyContent="space-between"> 
+				  <FormControlLabel
+					  control={<Switch 
+						  color="primary"
+							data-testid="ranking"
+							name="ranking"
+							id="ranking"
+							value={ranking}
+							onChange={(e) => setRanking(e.target.value)}
+					  />}
+					  label="Min ingrd."
+					  labelPlacement="start"
+				  />
+
+				  <ClickAwayListener onClickAway={handleTooltipClose}>
+					  <div>
+						  <Tooltip
+							  title="When toggled off, will maximize the used ingredients from your ingredients list. When toggled on, will try to minimize the number of missing ingredients"
+							  placement="right-start"
+							  	onClose={handleTooltipClose}
+							  	open={open}
+							  	disableFocusListener
+						  >
+							<IconButton 
+							  	onClick={handleTooltipOpen} 
+							  	color="primary"><HelpIcon /></IconButton>
+						  </Tooltip>
+					  </div>
+				  </ClickAwayListener>
+			  </Box>
+
 			  <Box display="flex"
 				  justifyContent="space-between">
 				<Button 

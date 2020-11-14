@@ -5,6 +5,6 @@ describe('generateRecipesIngredientsQueryString', () => {
 
 		const ingredients = ['apples', 'flour', 'sugar']
 
-		expect(generateRecipesIngredientsQueryString(ingredients)).toBe('ingredients=apples,+flour,+sugar&number=4');
+		expect(generateRecipesIngredientsQueryString(ingredients)).toBe('ingredients=apples,+flour,+sugar&number=4&ranking=1');
 	});
 });
