@@ -1,6 +1,8 @@
 import React from 'react';
-import { List, ListItem, ListItemText, Card, CardHeader, CardMedia, Box, ListItemAvatar, Avatar } from '@material-ui/core';
+import { List, Card, CardHeader, CardMedia, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+
+import { IngredientDisplay } from './IngredientDisplay';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -30,36 +32,6 @@ export const Recipe = (props) => {
 	const existingIngredients = props.existingIngredients || []
 	const requiredIngredients = props.requiredIngredients || []
 
-	const existingIngredientsDisplay = existingIngredients.map((ingredient, ind) => {
-		return (
-			<ListItem 
-				dense={true} 
-				key={ind}>
-				<ListItemText className={classes.ingredient}>{ingredient.name}</ListItemText>
-				<ListItemAvatar>
-					<Avatar 
-						alt={ingredient.name}
-						src={ingredient.image}
-					/>
-				</ListItemAvatar>
-			</ListItem>)
-	});
-
-	const requiredIngredientsDisplay = requiredIngredients.map((ingredient, ind) => {
-		return (
-			<ListItem
-				dense={true} 
-				key={ind}>
-				<ListItemText className={classes.ingredient}>{ingredient.name}</ListItemText>
-				<ListItemAvatar>
-					<Avatar 
-						alt={ingredient.name}
-						src={ingredient.image}
-					/>
-				</ListItemAvatar>
-			</ListItem>)
-	});
-
 	return (
 		<Card className={classes.root} data-testid='recipeDisplay'>
 			<CardHeader
@@ -77,10 +49,10 @@ export const Recipe = (props) => {
 				<Box className={classes.ingredientColumns}
 					display="flex"
 					flexDirection="column"
-				justifyContent="center">
+					justifyContent="center">
 					<h4 className={classes.columnHeader}>have</h4>
 					<List>
-						{existingIngredientsDisplay}
+						<IngredientDisplay ingredients={existingIngredients} classes={classes} />
 					</List>
 				</Box>
 				<Box className={classes.ingredientColumns} display="flex"
@@ -88,7 +60,7 @@ export const Recipe = (props) => {
 					justifyContent="center">
 					<h4 className={classes.columnHeader}>need</h4>
 					<List>
-						{requiredIngredientsDisplay}
+						<IngredientDisplay ingredients={requiredIngredients} classes={classes} />
 					</List>
 				</Box>
 			</Box>
