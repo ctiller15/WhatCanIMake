@@ -74,12 +74,50 @@ test('ingredients are placed in a list', () => {
 	expect(items[0].textContent).toBe('new ingredient');
 });
 
+test('duplicate ingredients are not placed in a list', () => {
+	store = mockStore({
+		ingredient: {
+			ingredients: ['new ingredient'],
+			recipes: []
+		}
+	});
+
+	const { getByRole } = render(
+		<Provider store={store}>
+			<App />
+		</Provider>
+	);
+
+	const inputField = getByRole('textbox');
+
+	fireEvent.change(inputField, { target: { value: 'new ingredient'}})
+
+	const button = getByRole('button', {name: /add ingredient/i})
+
+	expect(button).toBeDisabled();
+});
+
 test('If text is empty, add ingredient button is disabled', () => {
 	const { getByRole } = render(
 		<Provider store={store}>
 			<App />
 		</Provider>
 	);
+
+	const button = getByRole('button', {name: /add ingredient/i})
+	expect(button).toBeDisabled();
+})
+
+test('If text trims to empty, add ingredient button is disabled', () => {
+	const { getByRole } = render(
+		<Provider store={store}>
+			<App />
+		</Provider>
+	);
+
+	const inputField = getByRole('textbox');
+
+	fireEvent.change(inputField, { target: { value: '    '}})
 
 	const button = getByRole('button', {name: /add ingredient/i})
 	expect(button).toBeDisabled();

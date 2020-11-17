@@ -152,7 +152,7 @@ function App() {
 			  <Box display="flex"
 				  justifyContent="space-between">
 				<Button 
-					disabled={!ingredient}
+					disabled={!ingredient.trim() || ingredients.includes(ingredient)}
 					variant="contained"
 					onClick={onIngredientSubmitted}>
 					Add Ingredient	
